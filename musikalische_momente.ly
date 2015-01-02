@@ -70,3 +70,34 @@
     \layout { }
 }
 
+
+\score {
+    \new Staff \relative c' {
+        \set Staff.midiInstrument = #"flute"
+        \time 4/4
+        \tempo "Presto" 4 = 180
+        \key f \major
+        c'4^"portato" a gis g | f2. g4 gis a r2
+    }
+    \header {
+        piece = "Musikalischer Moment No. 5."
+    }
+    \midi { }
+    \layout { }
+}
+
+\score {
+    \new Staff \relative c' {
+        \set Staff.midiInstrument = #"flute"
+        \time 2/4
+        \tempo "Andante" 4 = 80
+        \key f \major
+        f4 (c')
+    }
+    \header {
+        piece = "Musikalischer Moment No. 6."
+    }
+    \midi { }
+    \layout { }
+}
+
