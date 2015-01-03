@@ -1,0 +1,8 @@
+#
+# Makefile
+#
+
+
+all:
+	lilypond *.ly
+
