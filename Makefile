@@ -1,26 +1,35 @@
 #
 # Makefile
 #
-objects = musikalische_momente
+objects = phrases $(basename $(wildcard opus-*.ly)) $(basename $(wildcard etude-*.ly))
 pdf = $(patsubst %, %.pdf, $(objects))
-midi = $(wildcard *.midi)
-wav = $(wildcard *.wav)
 output_format = pdf
 
-.PHONY: all
-all: $(pdf)
 
-wav: ${midi}
+all:
+	make objects
 
-.PHONY: ${midi}
-${midi}:
-	timidity --output-24bit -A120 $@ -Ow
+objects: ${objects}
+
+${objects}:
+	make "$@.pdf"
+	make "$@.wav"
+
+pdf: ${pdf}
 
 %.pdf: %.ly
-	sed 's/%(midi) //' $< > "$(basename $@)-with-midi.ly"
-	lilypond --output $(basename $@) "$(basename $@)-with-midi.ly"
-	rm "$(basename $@)-with-midi.ly"
-	lilypond --$(output_format) --output $(basename $@) $<
+	lilypond --$(output_format) $<
+
+%.wav: %.ly
+	for file in $(wildcard $(basename $@)*.midi); do \
+		timidity --output-24bit -A120 $$file -Ow; \
+	done
 
 clean:
-	rm -f *.wav *.pdf *.midi
+	rm -f *.pdf *.midi *.wav
+	make -C notes clean
+
+.PHONY: notes
+notes:
+	make -C notes
+

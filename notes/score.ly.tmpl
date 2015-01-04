@@ -1,0 +1,21 @@
+structure = {
+    \new Staff = "flute"
+    <<
+    \set Staff.midiInstrument = #"flute"
+    \context Voice = "note" \note
+    >>
+}
+
+\score {
+    \structure
+    \header {
+        piece = \title
+    }
+    \layout { }
+}
+
+\score {
+    \articulate \structure
+    \midi { }
+}
+
